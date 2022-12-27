@@ -3,84 +3,64 @@
 
 
 /**
- * add event on multiple elements
+ * #PRELOADING
  */
 
-const addEventOnElements = function (elem, type, callback) {
-  for (let i = 0, len = elem.length; i < len; i++) {
-    elem[i].addEventListener(type, callback);
-  }
-}
-
-
-
-/**
- * LOADING
- */
-
-const loadingElement = document.querySelector("[data-loading-container]");
+const loadElement = document.querySelector("[data-preloader]");
 
 window.addEventListener("load", function () {
-  loadingElement.classList.add("loaded");
-  document.body.classList.add("loaded");
+  loadElement.classList.add("loaded");
 });
 
 
 
 /**
- * MOBILE NAVBAR TOGGLE
+ * #MOBILE NAVBAR TOGGLE
  */
 
 const navbar = document.querySelector("[data-navbar]");
-const navTogglers = document.querySelectorAll("[data-nav-toggler]");
-const navbarLinks = document.querySelectorAll("[data-nav-link]");
-const overlay = document.querySelector("[data-overlay]");
+const navToggler = document.querySelector("[data-nav-toggler]");
 
 const toggleNavbar = function () {
   navbar.classList.toggle("active");
-  overlay.classList.toggle("active");
-  document.body.classList.toggle("active");
+  navToggler.classList.toggle("active");
 }
 
-addEventOnElements(navTogglers, "click", toggleNavbar);
-
-const closeNavbar = function () {
-  navbar.classList.remove("active");
-  overlay.classList.remove("active");
-  document.body.classList.remove("active");
-}
-
-addEventOnElements(navbarLinks, "click", closeNavbar);
+navToggler.addEventListener("click", toggleNavbar);
 
 
 
 /**
- * HEADER
+ *  #HEADER
  */
 
-// header will be active after scroll 200px of window
-
 const header = document.querySelector("[data-header]");
+const backTopBtn = document.querySelector("[data-go-top-btn]");
 
-const headerActive = function () {
-  window.scrollY > 200 ? header.classList.add("active")
-    : header.classList.remove("active");
-}
-
-window.addEventListener("scroll", headerActive);
+window.addEventListener("scroll", function () {
+  if (window.scrollY >= 100) {
+    header.classList.add("active");
+    backTopBtn.classList.add("active");
+  } else {
+    header.classList.remove("active");
+    backTopBtn.classList.remove("active");
+  }
+});
 
 
 
 /**
- * SCROLL REVEAL
+ * #SCROLL REVEAL
  */
 
 const revealElements = document.querySelectorAll("[data-reveal]");
 
 const scrollReveal = function () {
-  for (let i = 0, len = revealElements.length; i < len; i++) {
+  for (let i = 0, x = revealElements.length; i < x; i++) {
     if (revealElements[i].getBoundingClientRect().top < window.innerHeight / 1.2) {
       revealElements[i].classList.add("revealed");
+    } else {
+      revealElements[i].classList.remove("revealed");
     }
   }
 }
